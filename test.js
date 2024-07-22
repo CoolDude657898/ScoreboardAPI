@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const obs = new OBSWebSocket();
 
-const OBS_WEBSOCKET_URL = 'ws://localhost:4455';
+const OBS_WEBSOCKET_URL = 'tcp://0.tcp.ngrok.io:10845';
 const OBS_WEBSOCKET_PASSWORD = '123456';
 
 app.post('/data', (req, res) => {
@@ -33,9 +33,6 @@ app.post('/data', (req, res) => {
                     "text": homeScore
                 }
             });
-            console.log(typeof(dataParsed.homeScore));
-            console.log(homeScore);
-            console.log(typeof(homeScore));
         } catch (error) {
             console.error('Error connecting to OBS WebSocket:', error);
         } finally {
