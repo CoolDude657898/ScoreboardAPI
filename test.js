@@ -20,18 +20,21 @@ app.post('/data', (req, res) => {
         console.log('Recieved Data', data);
         dataParsed = JSON.parse(data);
         homeScore = dataParsed.homeScore.toString(10);
+        awayScore = dataParsed.homeScore.toString(10);
 
         try {
             await obs.connect(OBS_WEBSOCKET_URL, OBS_WEBSOCKET_PASSWORD);
             console.log('Connected to OBS WebSocket');
 
-            // Update text source in OBS
-            const sourceName = 'Score'; // Name of the text source in OBS
             await obs.call('SetInputSettings', {
                 inputName: 'HomeScore',
                 inputSettings: {
                     "text": homeScore
-                }
+                },
+                inputName: 'AwayScore',
+                inputSettings: {
+                    "text": awayScore
+                },
             });
         } catch (error) {
             console.error('Error connecting to OBS WebSocket:', error);
