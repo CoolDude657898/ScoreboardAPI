@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const obs = new OBSWebSocket();
 
-const OBS_WEBSOCKET_URL = 'tcp://0.tcp.ngrok.io:10845';
+const OBS_WEBSOCKET_URL = 'ws://0.tcp.ngrok.io:10845';
 const OBS_WEBSOCKET_PASSWORD = '123456';
 
 app.post('/data', (req, res) => {
