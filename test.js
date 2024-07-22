@@ -9,19 +9,40 @@ const obs = new OBSWebSocket();
 const OBS_WEBSOCKET_URL = 'ws://localhost:4455';
 const OBS_WEBSOCKET_PASSWORD = '123456';
 
-app.use(express.json());
-
-app.post('/data', async (req, res) => {
+app.post('/data', (req, res) => {
     let data = '';
 
     req.on('data', chunk => {
         data += chunk;
     });
 
-    req.on('end', () => {
+    req.on('end', async () => {
         console.log('Recieved Data', data);
+        dataParsed = JSON.parse(data);
+        homeScore = dataParsed.homeScore.toString(10);
 
-        res.status(200).send('Data Received');
+        try {
+            await obs.connect(OBS_WEBSOCKET_URL, OBS_WEBSOCKET_PASSWORD);
+            console.log('Connected to OBS WebSocket');
+
+            // Update text source in OBS
+            const sourceName = 'Score'; // Name of the text source in OBS
+            await obs.call('SetInputSettings', {
+                inputName: sourceName,
+                inputSettings: {
+                    "text": homeScore
+                }
+            });
+            console.log(typeof(dataParsed.homeScore));
+            console.log(homeScore);
+            console.log(typeof(homeScore));
+        } catch (error) {
+            console.error('Error connecting to OBS WebSocket:', error);
+        } finally {
+            await obs.disconnect();
+        }
+
+        res.status(200).send('Data Received and Text Updated');  
     });
 });
 
