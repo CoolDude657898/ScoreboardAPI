@@ -28,7 +28,7 @@ app.post('/data', (req, res) => {
             // Update text source in OBS
             const sourceName = 'Score'; // Name of the text source in OBS
             await obs.call('SetInputSettings', {
-                inputName: sourceName,
+                inputName: 'HomeScore',
                 inputSettings: {
                     "text": homeScore
                 }
