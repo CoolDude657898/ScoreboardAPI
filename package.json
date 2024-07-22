@@ -9,6 +9,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "obs-websocket-js": "^5.0.5"
   }
 }

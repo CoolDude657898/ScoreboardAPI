@@ -1,10 +1,17 @@
 const express = require('express');
 const http = require('http');
+const OBSWebSocket = require('obs-websocket-js').default;
 
 const app = express();
 const server = http.createServer(app);
+const obs = new OBSWebSocket();
 
-app.post('/data', (req, res) => {
+const OBS_WEBSOCKET_URL = 'ws://localhost:4455';
+const OBS_WEBSOCKET_PASSWORD = '123456';
+
+app.use(express.json());
+
+app.post('/data', async (req, res) => {
     let data = '';
 
     req.on('data', chunk => {
