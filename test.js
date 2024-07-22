@@ -20,7 +20,7 @@ app.post('/data', (req, res) => {
         console.log('Recieved Data', data);
         dataParsed = JSON.parse(data);
         homeScore = dataParsed.homeScore.toString(10);
-        awayScore = dataParsed.homeScore.toString(10);
+        awayScore = dataParsed.awayScore.toString(10);
 
         try {
             await obs.connect(OBS_WEBSOCKET_URL, OBS_WEBSOCKET_PASSWORD);
